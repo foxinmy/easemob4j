@@ -9,6 +9,8 @@ easemob4j
 
 * UserApi `用户API`
 
+* NotifyApi `消息API`
+
 项目说明
 -------
 环信REST接口实现
