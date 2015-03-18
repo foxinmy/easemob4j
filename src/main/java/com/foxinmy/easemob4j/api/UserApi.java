@@ -10,13 +10,14 @@ import com.foxinmy.easemob4j.token.Token;
 import com.foxinmy.easemob4j.token.TokenHolder;
 
 /**
- * 用户相关
+ * 用户API
  * 
  * @className UserApi
  * @author jy
  * @date 2015年1月28日
  * @since JDK 1.7
- * @see
+ * @see com.foxinmy.easemob4j.model.User
+ * @see <a href="http://www.easemob.com/docs/rest/userapi/">用户体系</a>
  */
 public class UserApi extends BaseApi {
 	private final TokenHolder tokenHolder;
@@ -30,8 +31,9 @@ public class UserApi extends BaseApi {
 	/**
 	 * 创建用户
 	 * 
-	 * @param user
-	 * @return
+	 * @param user 单个或者多个用户
+	 * @return 操作结果
+	 * @see <a href="http://www.easemob.com/docs/rest/userapi/#im">创建单个或者多个用户</a>
 	 * @throws EasemobException
 	 */
 	public ApiResult createUser(User... user) throws EasemobException {
@@ -47,9 +49,10 @@ public class UserApi extends BaseApi {
 	/**
 	 * 添加好友
 	 * 
-	 * @param ownerName
-	 * @param friendName
-	 * @return
+	 * @param ownerName 我的昵称
+	 * @param friendName 好友昵称
+	 * @return 操作结果
+	 * @see <a href="http://www.easemob.com/docs/rest/userapi/#contactsfriend">添加好友</a>
 	 * @throws EasemobException
 	 */
 	public ApiResult contactFriend(String ownerName, String friendName)
