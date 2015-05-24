@@ -11,7 +11,6 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Consts;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
@@ -32,8 +31,6 @@ import org.apache.http.impl.conn.PoolingClientConnectionManager;
 import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.util.EntityUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSONObject;
 import com.foxinmy.easemob4j.exception.EasemobException;
@@ -50,9 +47,6 @@ import com.foxinmy.easemob4j.exception.EasemobException;
 public class HttpRequest {
 
 	protected AbstractHttpClient client;
-
-	private final static Logger log = LoggerFactory
-			.getLogger(HttpRequest.class);
 
 	public HttpRequest() {
 		this(150, 100, 10000, 10000);
@@ -111,10 +105,10 @@ public class HttpRequest {
 	public Response post(String url, String token, String body)
 			throws EasemobException {
 		HttpPost method = new HttpPost(url);
-		if (StringUtils.isNotBlank(token)) {
+		if (token != null && !token.trim().isEmpty()) {
 			method.addHeader("Authorization", String.format("Bearer %s", token));
 		}
-		if (StringUtils.isNotBlank(body)) {
+		if (body != null && !body.trim().isEmpty()) {
 			method.setEntity(new StringEntity(body, ContentType.create(
 					ContentType.APPLICATION_JSON.getMimeType(), Consts.UTF_8)));
 		}
@@ -125,7 +119,6 @@ public class HttpRequest {
 			throws EasemobException {
 		Response response = null;
 		try {
-			log.info("em request:{}", request);
 			HttpResponse httpResponse = client.execute(request);
 			StatusLine statusLine = httpResponse.getStatusLine();
 			HttpEntity httpEntity = httpResponse.getEntity();
@@ -138,7 +131,6 @@ public class HttpRequest {
 			response.setStream(new ByteArrayInputStream(data));
 			response.setText(new String(data, Consts.UTF_8));
 			EntityUtils.consume(httpEntity);
-			log.info("em response:{}", response);
 			if (status != HttpStatus.SC_OK) {
 				JSONObject errorJson = response.getAsJson();
 				throw new EasemobException(errorJson.getString("error"),

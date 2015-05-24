@@ -6,10 +6,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+
 import com.foxinmy.easemob4j.exception.EasemobException;
 import com.foxinmy.easemob4j.model.EMAccount;
 import com.foxinmy.easemob4j.util.EMConfigUtil;
-import com.thoughtworks.xstream.XStream;
 
 /**
  * 用FILE保存TOKEN
@@ -20,7 +24,8 @@ import com.thoughtworks.xstream.XStream;
  * @since JDK 1.7
  */
 public class FileTokenHolder extends TokenHolder {
-	private final XStream xstream;
+	private Unmarshaller unmarshaller;
+	private Marshaller marshaller;
 	private final String tokenPath;
 
 	public FileTokenHolder() {
@@ -30,11 +35,13 @@ public class FileTokenHolder extends TokenHolder {
 	public FileTokenHolder(EMAccount account) {
 		super(account);
 		this.tokenPath = EMConfigUtil.getValue("token_path");
-		xstream = new XStream();
-		xstream.ignoreUnknownElements();
-		xstream.autodetectAnnotations(true);
-		xstream.alias("xml", Token.class);
-		xstream.processAnnotations(Token.class);
+		try {
+			JAXBContext jaxbContext = JAXBContext.newInstance(Token.class);
+			unmarshaller = jaxbContext.createUnmarshaller();
+			marshaller = jaxbContext.createMarshaller();
+		} catch (JAXBException e) {
+			;
+		}
 	}
 
 	@Override
@@ -46,8 +53,8 @@ public class FileTokenHolder extends TokenHolder {
 		long now_time = ca.getTimeInMillis();
 		try {
 			if (token_file.exists()) {
-				token = (Token) xstream
-						.fromXML(new FileInputStream(token_file));
+				token = (Token) unmarshaller.unmarshal(new FileInputStream(
+						token_file));
 				long expire_time = token.getTime()
 						+ (token.getExpiresIn() * 1000) - 2;
 				if (expire_time > now_time) {
@@ -55,8 +62,10 @@ public class FileTokenHolder extends TokenHolder {
 				}
 			}
 			token = createToken();
-			xstream.toXML(token, new FileOutputStream(token_file));
+			marshaller.marshal(token, new FileOutputStream(token_file));
 		} catch (IOException e) {
+			throw new EasemobException(e.getMessage());
+		} catch (JAXBException e) {
 			throw new EasemobException(e.getMessage());
 		}
 		return token;

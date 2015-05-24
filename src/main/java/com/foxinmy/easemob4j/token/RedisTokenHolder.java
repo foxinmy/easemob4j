@@ -1,7 +1,5 @@
 package com.foxinmy.easemob4j.token;
 
-import org.apache.commons.lang3.StringUtils;
-
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -36,7 +34,7 @@ public class RedisTokenHolder extends TokenHolder {
 	public RedisTokenHolder(JedisPool jedisPool) {
 		this(jedisPool, EMConfigUtil.getAccount());
 	}
-	
+
 	public RedisTokenHolder(String host, int port, EMAccount account) {
 		super(account);
 		JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
@@ -53,7 +51,6 @@ public class RedisTokenHolder extends TokenHolder {
 		this.jedisPool = jedisPool;
 	}
 
-
 	@Override
 	public Token getToken() throws EasemobException {
 		Token token = null;
@@ -62,7 +59,7 @@ public class RedisTokenHolder extends TokenHolder {
 			jedis = jedisPool.getResource();
 			String cacheKey = getCacheKey();
 			String accessToken = jedis.get(cacheKey);
-			if (StringUtils.isBlank(accessToken)) {
+			if (accessToken == null || accessToken.trim().isEmpty()) {
 				token = createToken();
 				jedis.setex(cacheKey, (int) token.getExpiresIn(),
 						token.getAccessToken());
