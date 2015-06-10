@@ -1,10 +1,10 @@
 package com.foxinmy.easemob4j;
 
 import com.alibaba.fastjson.JSONObject;
+import com.foxinmy.easemob4j.api.ApiResult;
 import com.foxinmy.easemob4j.api.NotifyApi;
 import com.foxinmy.easemob4j.api.UserApi;
 import com.foxinmy.easemob4j.exception.EasemobException;
-import com.foxinmy.easemob4j.http.ApiResult;
 import com.foxinmy.easemob4j.message.NotifyMessage;
 import com.foxinmy.easemob4j.model.User;
 import com.foxinmy.easemob4j.token.FileTokenHolder;

@@ -3,7 +3,6 @@ package com.foxinmy.easemob4j.api;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.foxinmy.easemob4j.exception.EasemobException;
-import com.foxinmy.easemob4j.http.Response;
 import com.foxinmy.easemob4j.message.NotifyMessage;
 import com.foxinmy.easemob4j.model.EMAccount;
 import com.foxinmy.easemob4j.token.Token;
@@ -44,8 +43,8 @@ public class NotifyApi extends BaseApi {
 				getRequestUri("send_message_url"), account.getOrgName(),
 				account.getAppName());
 		Token token = tokenHolder.getToken();
-		Response response = request.post(send_message_url,
-				token.getAccessToken(), JSON.toJSONString(message));
-		return response.getAsJson().getJSONObject("data");
+		JSONObject response = post(send_message_url, token.getAccessToken(),
+				JSON.toJSONString(message));
+		return response.getJSONObject("data");
 	}
 }
