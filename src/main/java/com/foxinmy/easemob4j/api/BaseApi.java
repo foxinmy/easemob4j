@@ -1,6 +1,5 @@
 package com.foxinmy.easemob4j.api;
 
-import java.io.IOException;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -10,9 +9,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.foxinmy.easemob4j.exception.EasemobException;
 import com.foxinmy.easemob4j.model.Consts;
 import com.foxinmy.weixin4j.http.ContentType;
-import com.foxinmy.weixin4j.http.Header;
 import com.foxinmy.weixin4j.http.HttpClient;
-import com.foxinmy.weixin4j.http.HttpPost;
+import com.foxinmy.weixin4j.http.HttpClientException;
+import com.foxinmy.weixin4j.http.HttpHeaders;
+import com.foxinmy.weixin4j.http.HttpMethod;
+import com.foxinmy.weixin4j.http.HttpRequest;
 import com.foxinmy.weixin4j.http.HttpResponse;
 import com.foxinmy.weixin4j.http.HttpStatus;
 import com.foxinmy.weixin4j.http.SimpleHttpClient;
@@ -51,25 +52,27 @@ public class BaseApi {
 
 	protected JSONObject post(String url, String token, String body)
 			throws EasemobException {
-		HttpPost request = new HttpPost(url);
+		HttpRequest request = new HttpRequest(HttpMethod.POST, url);
 		if (token != null && !token.trim().isEmpty()) {
-			request.addHeader(new Header("Authorization", String.format(
-					"Bearer %s", token)));
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Authorization", String.format("Bearer %s", token));
+			request.setHeaders(headers);
 		}
 		if (body != null && !body.trim().isEmpty()) {
-			request.setEntity(new StringEntity(body, ContentType.APPLICATION_JSON));
+			request.setEntity(new StringEntity(body,
+					ContentType.APPLICATION_JSON));
 		}
 		try {
 			HttpResponse response = httpClient.execute(request);
 			byte[] bytes = response.getContent();
 			JSONObject result = JSON.parseObject(bytes, 0, bytes.length,
 					Consts.UTF_8.newDecoder(), JSONObject.class);
-			if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+			if (response.getStatus().getStatusCode() != HttpStatus.SC_OK) {
 				throw new EasemobException(result.getString("error"),
 						result.getString("error_description"));
 			}
 			return result;
-		} catch (IOException e) {
+		} catch (HttpClientException e) {
 			throw new EasemobException(e.getMessage());
 		}
 	}

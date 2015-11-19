@@ -1,7 +1,5 @@
 package com.foxinmy.easemob4j.token;
 
-import java.io.IOException;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.foxinmy.easemob4j.exception.EasemobException;
@@ -9,7 +7,9 @@ import com.foxinmy.easemob4j.model.Consts;
 import com.foxinmy.easemob4j.model.EMAccount;
 import com.foxinmy.weixin4j.http.ContentType;
 import com.foxinmy.weixin4j.http.HttpClient;
-import com.foxinmy.weixin4j.http.HttpPost;
+import com.foxinmy.weixin4j.http.HttpClientException;
+import com.foxinmy.weixin4j.http.HttpMethod;
+import com.foxinmy.weixin4j.http.HttpRequest;
 import com.foxinmy.weixin4j.http.HttpResponse;
 import com.foxinmy.weixin4j.http.HttpStatus;
 import com.foxinmy.weixin4j.http.SimpleHttpClient;
@@ -53,7 +53,7 @@ public abstract class TokenHolder {
 		body.put("client_secret", account.getClientSecret());
 		String url = String.format(Consts.ASSESS_TOKEN_URL,
 				account.getOrgName(), account.getAppName());
-		HttpPost request = new HttpPost(url);
+		HttpRequest request = new HttpRequest(HttpMethod.POST, url);
 		request.setEntity(new StringEntity(body.toJSONString(),
 				ContentType.APPLICATION_JSON));
 		try {
@@ -61,14 +61,14 @@ public abstract class TokenHolder {
 			byte[] bytes = response.getContent();
 			JSONObject result = JSON.parseObject(bytes, 0, bytes.length,
 					Consts.UTF_8.newDecoder(), JSONObject.class);
-			if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+			if (response.getStatus().getStatusCode() != HttpStatus.SC_OK) {
 				throw new EasemobException(result.getString("error"),
 						result.getString("error_description"));
 			}
 			Token token = JSON.toJavaObject(result, Token.class);
 			token.setTime(System.currentTimeMillis());
 			return token;
-		} catch (IOException e) {
+		} catch (HttpClientException e) {
 			throw new EasemobException(e.getMessage());
 		}
 	}
