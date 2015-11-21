@@ -16,8 +16,8 @@ import com.foxinmy.weixin4j.http.HttpMethod;
 import com.foxinmy.weixin4j.http.HttpRequest;
 import com.foxinmy.weixin4j.http.HttpResponse;
 import com.foxinmy.weixin4j.http.HttpStatus;
-import com.foxinmy.weixin4j.http.SimpleHttpClient;
 import com.foxinmy.weixin4j.http.entity.StringEntity;
+import com.foxinmy.weixin4j.http.factory.HttpClientFactory;
 
 /**
  * 
@@ -28,11 +28,15 @@ import com.foxinmy.weixin4j.http.entity.StringEntity;
  * @see
  */
 public class BaseApi {
-	protected final HttpClient httpClient = new SimpleHttpClient();
+	protected final HttpClient httpClient;
 	private final static ResourceBundle easemobBundle;
 	static {
 		easemobBundle = ResourceBundle
 				.getBundle("com/foxinmy/easemob4j/api/easemob");
+	}
+	
+	public BaseApi(){
+		httpClient  = HttpClientFactory.getInstance();
 	}
 
 	protected String getRequestUri(String key) {
