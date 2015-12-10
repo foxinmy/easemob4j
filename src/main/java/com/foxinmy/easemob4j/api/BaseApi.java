@@ -24,7 +24,7 @@ import com.foxinmy.weixin4j.http.factory.HttpClientFactory;
  * @className BaseApi
  * @author jy
  * @date 2015年1月28日
- * @since JDK 1.7
+ * @since JDK 1.6
  * @see
  */
 public class BaseApi {

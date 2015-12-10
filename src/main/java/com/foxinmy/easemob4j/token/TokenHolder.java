@@ -21,7 +21,7 @@ import com.foxinmy.weixin4j.http.entity.StringEntity;
  * @className TokenHolder
  * @author jy.hu
  * @date 2014年9月27日
- * @since JDK 1.7
+ * @since JDK 1.6
  * @see com.foxinmy.weixin4j.model.Token
  * @see com.foxinmy.easemob4j.token.FileTokenHolder
  * @see com.foxinmy.easemob4j.token.RedisTokenHolder

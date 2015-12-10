@@ -7,7 +7,7 @@ import redis.clients.jedis.exceptions.JedisException;
 
 import com.foxinmy.easemob4j.exception.EasemobException;
 import com.foxinmy.easemob4j.model.EMAccount;
-import com.foxinmy.easemob4j.util.EMConfigUtil;
+import com.foxinmy.easemob4j.util.Easemob4jConfigUtil;
 
 /**
  * 用REDIS保存TOKEN
@@ -15,7 +15,7 @@ import com.foxinmy.easemob4j.util.EMConfigUtil;
  * @className RedisTokenHolder
  * @author jy
  * @date 2015年1月9日
- * @since JDK 1.7
+ * @since JDK 1.6
  */
 public class RedisTokenHolder extends TokenHolder {
 
@@ -28,11 +28,11 @@ public class RedisTokenHolder extends TokenHolder {
 	public final static boolean TEST_ON_RETURN = true;
 
 	public RedisTokenHolder() {
-		this("localhost", 6379, EMConfigUtil.getAccount());
+		this("localhost", 6379, Easemob4jConfigUtil.getAccount());
 	}
 
 	public RedisTokenHolder(JedisPool jedisPool) {
-		this(jedisPool, EMConfigUtil.getAccount());
+		this(jedisPool, Easemob4jConfigUtil.getAccount());
 	}
 
 	public RedisTokenHolder(String host, int port, EMAccount account) {

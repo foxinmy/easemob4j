@@ -2,31 +2,30 @@ package com.foxinmy.easemob4j.util;
 
 import java.io.File;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 import com.alibaba.fastjson.JSON;
 import com.foxinmy.easemob4j.model.EMAccount;
 
 /**
  * 环信配置
- * @className EMConfigUtil
+ * 
+ * @className Easemob4jConfigUtil
  * @author jy
  * @date 2015年1月28日
- * @since JDK 1.7
+ * @since JDK 1.6
  * @see
  */
-public class EMConfigUtil {
+public class Easemob4jConfigUtil {
 	private final static String CLASSPATH_PREFIX = "classpath:";
 	private final static String CLASSPATH_VALUE;
 	private final static ResourceBundle easemobBundle;
 	static {
-		easemobBundle = ResourceBundle.getBundle("easemob");
-		Set<String> keySet = easemobBundle.keySet();
+		easemobBundle = ResourceBundle.getBundle("easemob4j");
 		File file = null;
 		CLASSPATH_VALUE = Thread.currentThread().getContextClassLoader()
 				.getResource("").getPath();
-		for (String key : keySet) {
-			if (!key.endsWith("_path")) {
+		for (String key : easemobBundle.keySet()) {
+			if (!key.endsWith(".path")) {
 				continue;
 			}
 			file = new File(getValue(key).replaceFirst(CLASSPATH_PREFIX,
@@ -37,6 +36,14 @@ public class EMConfigUtil {
 			}
 		}
 	}
+	private final static String EASEMOB4J_PREFIX = "easemob4j";
+
+	private static String wrapKeyName(String key) {
+		if (!key.startsWith(EASEMOB4J_PREFIX)) {
+			return String.format("%s.%s", EASEMOB4J_PREFIX, key);
+		}
+		return key;
+	}
 
 	/**
 	 * 获取easemob.properties文件中的key值
@@ -45,7 +52,8 @@ public class EMConfigUtil {
 	 * @return
 	 */
 	public static String getValue(String key) {
-		return easemobBundle.getString(key);
+		String wrapKey = wrapKeyName(key);
+		return System.getProperty(wrapKey, easemobBundle.getString(wrapKey));
 	}
 
 	/**
@@ -58,9 +66,10 @@ public class EMConfigUtil {
 		return new File(getValue(key).replaceFirst(CLASSPATH_PREFIX,
 				CLASSPATH_VALUE)).getPath();
 	}
-	
+
 	/**
 	 * 获取账号信息
+	 * 
 	 * @return
 	 */
 	public static EMAccount getAccount() {

@@ -6,7 +6,7 @@ package com.foxinmy.easemob4j.exception;
  * @className EasemodException
  * @author jy
  * @date 2015年1月28日
- * @since JDK 1.7
+ * @since JDK 1.6
  * @see
  */
 public class EasemobException extends Exception {

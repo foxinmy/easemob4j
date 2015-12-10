@@ -16,7 +16,7 @@ import com.foxinmy.easemob4j.token.TokenHolder;
  * @className EasemobProxy
  * @author jy
  * @date 2015年1月29日
- * @since JDK 1.7
+ * @since JDK 1.6
  * @see <a href="http://www.easemob.com/docs/rest/">环信API</a>
  */
 public class EasemobProxy {

@@ -11,7 +11,7 @@ import com.foxinmy.easemob4j.type.MessageType;
  * @className Notify
  * @author jy
  * @date 2015年3月18日
- * @since JDK 1.7
+ * @since JDK 1.6
  * @see
  */
 public abstract class Notify implements Serializable {

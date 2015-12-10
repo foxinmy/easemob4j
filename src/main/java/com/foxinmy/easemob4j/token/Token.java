@@ -10,7 +10,7 @@ import com.alibaba.fastjson.annotation.JSONField;
  * @className Token
  * @author jy
  * @date 2015年1月28日
- * @since JDK 1.7
+ * @since JDK 1.6
  * @see <a href="http://www.easemob.com/docs/rest/userapi/#getadmintoken">Token获取</a>
  */
 public class Token implements Serializable {

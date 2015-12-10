@@ -14,7 +14,7 @@ import com.foxinmy.easemob4j.token.TokenHolder;
  * @className UserApi
  * @author jy
  * @date 2015年1月28日
- * @since JDK 1.7
+ * @since JDK 1.6
  * @see com.foxinmy.easemob4j.model.User
  * @see <a href="http://www.easemob.com/docs/rest/userapi/">用户体系</a>
  */

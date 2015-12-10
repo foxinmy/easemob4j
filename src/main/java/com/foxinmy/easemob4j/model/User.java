@@ -9,7 +9,7 @@ import com.alibaba.fastjson.annotation.JSONField;
  * @className User
  * @author jy
  * @date 2015年1月28日
- * @since JDK 1.7
+ * @since JDK 1.6
  * @see
  */
 public class User implements Serializable {
