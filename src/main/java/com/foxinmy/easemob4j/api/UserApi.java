@@ -5,8 +5,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.foxinmy.easemob4j.exception.EasemobException;
 import com.foxinmy.easemob4j.model.EMAccount;
 import com.foxinmy.easemob4j.model.User;
-import com.foxinmy.easemob4j.token.Token;
-import com.foxinmy.easemob4j.token.TokenHolder;
+import com.foxinmy.easemob4j.token.EasemobTokenHolder;
+import com.foxinmy.weixin4j.model.Token;
 
 /**
  * 用户API
@@ -19,10 +19,10 @@ import com.foxinmy.easemob4j.token.TokenHolder;
  * @see <a href="http://www.easemob.com/docs/rest/userapi/">用户体系</a>
  */
 public class UserApi extends BaseApi {
-	private final TokenHolder tokenHolder;
+	private final EasemobTokenHolder tokenHolder;
 	private final EMAccount account;
 
-	public UserApi(TokenHolder tokenHolder) {
+	public UserApi(EasemobTokenHolder tokenHolder) {
 		this.tokenHolder = tokenHolder;
 		this.account = tokenHolder.getAccount();
 	}

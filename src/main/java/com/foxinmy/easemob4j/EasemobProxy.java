@@ -6,9 +6,14 @@ import com.foxinmy.easemob4j.api.NotifyApi;
 import com.foxinmy.easemob4j.api.UserApi;
 import com.foxinmy.easemob4j.exception.EasemobException;
 import com.foxinmy.easemob4j.message.NotifyMessage;
+import com.foxinmy.easemob4j.model.Consts;
+import com.foxinmy.easemob4j.model.EMAccount;
 import com.foxinmy.easemob4j.model.User;
-import com.foxinmy.easemob4j.token.FileTokenHolder;
-import com.foxinmy.easemob4j.token.TokenHolder;
+import com.foxinmy.easemob4j.token.EasemobTokenCreator;
+import com.foxinmy.easemob4j.token.EasemobTokenHolder;
+import com.foxinmy.easemob4j.util.Easemob4jConfigUtil;
+import com.foxinmy.weixin4j.token.FileTokenStorager;
+import com.foxinmy.weixin4j.token.TokenStorager;
 
 /**
  * 环信API实现
@@ -24,13 +29,32 @@ public class EasemobProxy {
 	private final UserApi userApi;
 	private final NotifyApi notifyApi;
 
+	private final EasemobTokenHolder tokenHolder;
+
 	public EasemobProxy() {
-		this(new FileTokenHolder());
+		this(Easemob4jConfigUtil.getAccount(), new FileTokenStorager(
+				Easemob4jConfigUtil.getValue("easemob4j.token.path",
+						Consts.DEFAULT_TOKEN_PATH)));
 	}
 
-	public EasemobProxy(TokenHolder tokenHolder) {
+	public EasemobProxy(EMAccount account) {
+		this(account, new FileTokenStorager(Easemob4jConfigUtil.getValue(
+				"easemob4j.token.path", Consts.DEFAULT_TOKEN_PATH)));
+	}
+
+	public EasemobProxy(TokenStorager tokenStorager) {
+		this(Easemob4jConfigUtil.getAccount(), tokenStorager);
+	}
+
+	public EasemobProxy(EMAccount account, TokenStorager tokenStorager) {
+		tokenHolder = new EasemobTokenHolder(new EasemobTokenCreator(account),
+				tokenStorager, account);
 		userApi = new UserApi(tokenHolder);
 		notifyApi = new NotifyApi(tokenHolder);
+	}
+
+	public EasemobTokenHolder getTokenHolder() {
+		return this.tokenHolder;
 	}
 
 	/**

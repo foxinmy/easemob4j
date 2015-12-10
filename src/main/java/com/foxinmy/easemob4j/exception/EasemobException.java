@@ -1,5 +1,7 @@
 package com.foxinmy.easemob4j.exception;
 
+import com.foxinmy.weixin4j.exception.WeixinException;
+
 /**
  * 调用接口抛出的异常
  * 
@@ -9,33 +11,15 @@ package com.foxinmy.easemob4j.exception;
  * @since JDK 1.6
  * @see
  */
-public class EasemobException extends Exception {
+public class EasemobException extends WeixinException {
 
 	private static final long serialVersionUID = 1L;
 
-	private String error;
-	private String desc;
-
 	public EasemobException(String error, String desc) {
-		this.error = error;
-		this.desc = desc;
+		super(error, desc);
 	}
 
 	public EasemobException(String desc) {
-		this.error = "-1";
-		this.desc = desc;
-	}
-
-	public String getError() {
-		return error;
-	}
-
-	public String getErrorDesc() {
-		return desc;
-	}
-
-	@Override
-	public String getMessage() {
-		return error + "," + desc;
+		super(desc);
 	}
 }

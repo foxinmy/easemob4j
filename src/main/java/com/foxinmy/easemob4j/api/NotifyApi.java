@@ -5,8 +5,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.foxinmy.easemob4j.exception.EasemobException;
 import com.foxinmy.easemob4j.message.NotifyMessage;
 import com.foxinmy.easemob4j.model.EMAccount;
-import com.foxinmy.easemob4j.token.Token;
-import com.foxinmy.easemob4j.token.TokenHolder;
+import com.foxinmy.easemob4j.token.EasemobTokenHolder;
+import com.foxinmy.weixin4j.model.Token;
 
 /**
  * 消息API
@@ -18,10 +18,10 @@ import com.foxinmy.easemob4j.token.TokenHolder;
  * @see <a href="http://www.easemob.com/docs/rest/sendmessage/">发送消息</a>
  */
 public class NotifyApi extends BaseApi {
-	private final TokenHolder tokenHolder;
+	private final EasemobTokenHolder tokenHolder;
 	private final EMAccount account;
 
-	public NotifyApi(TokenHolder tokenHolder) {
+	public NotifyApi(EasemobTokenHolder tokenHolder) {
 		this.tokenHolder = tokenHolder;
 		this.account = tokenHolder.getAccount();
 	}

@@ -199,7 +199,7 @@
 		<dependency>
 			<groupId>com.foxinmy</groupId>
 			<artifactId>weixin4j-base</artifactId>
-			<version>1.6.3</version>
+			<version>1.6.4</version>
 		</dependency>
 		<!-- 如需用到请自行依赖 -->
 		<dependency>

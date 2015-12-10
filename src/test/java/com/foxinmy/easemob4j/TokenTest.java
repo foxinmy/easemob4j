@@ -5,8 +5,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.foxinmy.easemob4j.exception.EasemobException;
-import com.foxinmy.easemob4j.token.FileTokenHolder;
-import com.foxinmy.easemob4j.token.TokenHolder;
+import com.foxinmy.easemob4j.model.Consts;
+import com.foxinmy.easemob4j.model.EMAccount;
+import com.foxinmy.easemob4j.token.EasemobTokenCreator;
+import com.foxinmy.easemob4j.token.EasemobTokenHolder;
+import com.foxinmy.easemob4j.util.Easemob4jConfigUtil;
+import com.foxinmy.weixin4j.token.FileTokenStorager;
 
 /**
  * 
@@ -18,11 +22,15 @@ import com.foxinmy.easemob4j.token.TokenHolder;
  */
 public class TokenTest {
 
-	protected TokenHolder tokenHolder;
+	protected EasemobTokenHolder tokenHolder;
 
 	@Before
 	public void setUp() {
-		tokenHolder = new FileTokenHolder();
+		EMAccount account = Easemob4jConfigUtil.getAccount();
+		String tokenPath = Easemob4jConfigUtil.getValue("easemob4j.token.path",
+				Consts.DEFAULT_TOKEN_PATH);
+		tokenHolder = new EasemobTokenHolder(new EasemobTokenCreator(account),
+				new FileTokenStorager(tokenPath), account);
 	}
 
 	@Test

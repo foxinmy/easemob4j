@@ -1,6 +1,7 @@
 package com.foxinmy.easemob4j.util;
 
 import java.io.File;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import com.alibaba.fastjson.JSON;
@@ -54,6 +55,25 @@ public class Easemob4jConfigUtil {
 	public static String getValue(String key) {
 		String wrapKey = wrapKeyName(key);
 		return System.getProperty(wrapKey, easemobBundle.getString(wrapKey));
+	}
+	
+	/**
+	 * key不存在时则返回传入的默认值
+	 * 
+	 * @param key
+	 * @param defaultValue
+	 * @return
+	 */
+	public static String getValue(String key, String defaultValue) {
+		String value = defaultValue;
+		try {
+			value = getValue(key);
+		} catch (MissingResourceException e) {
+			System.err.println("'" + key
+					+ "' key not found in umeng4j.properties file.");
+			; // error
+		}
+		return value;
 	}
 
 	/**
