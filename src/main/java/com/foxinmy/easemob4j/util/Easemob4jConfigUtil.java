@@ -47,7 +47,7 @@ public class Easemob4jConfigUtil {
 	}
 
 	/**
-	 * 获取easemob.properties文件中的key值
+	 * 获取easemob4j.properties文件中的key值
 	 * 
 	 * @param key
 	 * @return
@@ -70,7 +70,7 @@ public class Easemob4jConfigUtil {
 			value = getValue(key);
 		} catch (MissingResourceException e) {
 			System.err.println("'" + key
-					+ "' key not found in umeng4j.properties file.");
+					+ "' key not found in easemod4j.properties file.");
 			; // error
 		}
 		return value;
