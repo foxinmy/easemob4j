@@ -16,9 +16,11 @@ import com.foxinmy.weixin4j.http.entity.StringEntity;
 import com.foxinmy.weixin4j.http.factory.HttpClientFactory;
 import com.foxinmy.weixin4j.model.Token;
 import com.foxinmy.weixin4j.token.TokenCreator;
+import com.foxinmy.weixin4j.util.StringUtil;
 
 /**
  * 环信token创建
+ * 
  * @className EasemobTokenCreator
  * @author jy
  * @date 2015年12月10日
@@ -56,7 +58,8 @@ public class EasemobTokenCreator implements TokenCreator {
 						result.getString("error_description"));
 			}
 			Token token = JSON.toJavaObject(result, Token.class);
-			token.setTime(System.currentTimeMillis());
+			token.setCreateTime(System.currentTimeMillis());
+			token.setOriginalResult(StringUtil.newStringUtf8(bytes));
 			return token;
 		} catch (HttpClientException e) {
 			throw new EasemobException(e.getMessage());

@@ -26,7 +26,7 @@ public class UserTest extends TokenTest {
 
 	@Test
 	public void createUser() throws EasemobException {
-		User  user = new User("test1", "123456");
+		User  user = new User("test07", "123456");
 		System.err.println(userApi.createUser(user));
 	}
 	

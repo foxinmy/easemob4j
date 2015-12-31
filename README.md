@@ -53,7 +53,7 @@ easemob4j.properties说明
 	<dependency>
 	    <groupId>com.foxinmy</groupId>
 	    <artifactId>easemob4j</artifactId>
-	    <version>1.1.1</version>
+	    <version>1.1.2</version>
 	</dependency>
 	
 2.git clone & mvn package.

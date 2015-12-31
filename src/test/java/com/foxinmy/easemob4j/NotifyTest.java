@@ -33,5 +33,6 @@ public class NotifyTest extends TokenTest {
 		NotifyMessage message = new NotifyMessage(TargetType.users, notify, "1");
 		message.setFrom("2");
 		System.err.println(notifyApi.sendNotify(message));
+		System.err.println(notifyApi.sendNotify(message));
 	}
 }
