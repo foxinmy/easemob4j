@@ -8,7 +8,7 @@ import com.alibaba.fastjson.JSONObject;
  * 调用接口返回结果
  * 
  * @className ApiResult
- * @author jy
+ * @author jinyu(foxinmy@gmail.com)
  * @date 2015年1月28日
  * @since JDK 1.6
  * @see
@@ -26,6 +26,7 @@ public class ApiResult implements Serializable {
 	private int duration;
 	private String organization;
 	private String applicationName;
+	private int statusCode;
 
 	public String getAction() {
 		return action;
@@ -99,12 +100,20 @@ public class ApiResult implements Serializable {
 		this.applicationName = applicationName;
 	}
 
+	public int getStatusCode() {
+		return statusCode;
+	}
+
+	public void setStatusCode(int statusCode) {
+		this.statusCode = statusCode;
+	}
+
 	@Override
 	public String toString() {
 		return "ApiResult [action=" + action + ", application=" + application
 				+ ", params=" + params + ", path=" + path + ", uri=" + uri
 				+ ", timestamp=" + timestamp + ", duration=" + duration
 				+ ", organization=" + organization + ", applicationName="
-				+ applicationName + "]";
+				+ applicationName + ", statusCode=" + statusCode + "]";
 	}
 }

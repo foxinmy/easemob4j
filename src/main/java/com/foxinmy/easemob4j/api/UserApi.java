@@ -3,33 +3,31 @@ package com.foxinmy.easemob4j.api;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.foxinmy.easemob4j.exception.EasemobException;
-import com.foxinmy.easemob4j.model.EMAccount;
 import com.foxinmy.easemob4j.model.User;
-import com.foxinmy.easemob4j.token.EasemobTokenHolder;
-import com.foxinmy.weixin4j.model.Token;
+import com.foxinmy.easemob4j.token.EasemobToken;
+import com.foxinmy.easemob4j.token.EasemobTokenManager;
 
 /**
  * 用户API
- * 
+ *
  * @className UserApi
- * @author jy
+ * @author jinyu(foxinmy@gmail.com)
  * @date 2015年1月28日
  * @since JDK 1.6
  * @see com.foxinmy.easemob4j.model.User
  * @see <a href="http://www.easemob.com/docs/rest/userapi/">用户体系</a>
  */
 public class UserApi extends BaseApi {
-	private final EasemobTokenHolder tokenHolder;
-	private final EMAccount account;
+	private final EasemobTokenManager tokenManager;
 
-	public UserApi(EasemobTokenHolder tokenHolder) {
-		this.tokenHolder = tokenHolder;
-		this.account = tokenHolder.getAccount();
+	public UserApi(EasemobTokenManager tokenManager) {
+		super(tokenManager.getAccount());
+		this.tokenManager = tokenManager;
 	}
 
 	/**
 	 * 创建用户
-	 * 
+	 *
 	 * @param user
 	 *            单个或者多个用户
 	 * @return 操作结果
@@ -38,10 +36,8 @@ public class UserApi extends BaseApi {
 	 * @throws EasemobException
 	 */
 	public ApiResult createUser(User... user) throws EasemobException {
-		String create_user_url = String.format(
-				getRequestUri("create_user_url"), account.getOrgName(),
-				account.getAppName());
-		Token token = tokenHolder.getToken();
+		String create_user_url = getRequestUri0("create_user_url");
+		EasemobToken token = tokenManager.getCache();
 		JSONObject response = post(create_user_url, token.getAccessToken(),
 				JSON.toJSONString(user));
 		return JSON.toJavaObject(response, ApiResult.class);
@@ -49,7 +45,7 @@ public class UserApi extends BaseApi {
 
 	/**
 	 * 添加好友
-	 * 
+	 *
 	 * @param ownerName
 	 *            我的昵称
 	 * @param friendName
@@ -61,10 +57,9 @@ public class UserApi extends BaseApi {
 	 */
 	public ApiResult contactFriend(String ownerName, String friendName)
 			throws EasemobException {
-		String contact_friend_url = String.format(
-				getRequestUri("contact_friend_url"), account.getOrgName(),
-				account.getAppName(), ownerName, friendName);
-		Token token = tokenHolder.getToken();
+		String contact_friend_url = getRequestUri1("contact_friend_url",
+				ownerName, friendName);
+		EasemobToken token = tokenManager.getCache();
 		JSONObject response = post(contact_friend_url, token.getAccessToken(),
 				null);
 		return JSON.toJavaObject(response, ApiResult.class);

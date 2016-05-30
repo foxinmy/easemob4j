@@ -9,7 +9,7 @@ import com.foxinmy.easemob4j.type.MessageType;
  * 消息基类
  * 
  * @className Notify
- * @author jy
+ * @author jinyu(foxinmy@gmail.com)
  * @date 2015年3月18日
  * @since JDK 1.6
  * @see
@@ -17,7 +17,7 @@ import com.foxinmy.easemob4j.type.MessageType;
 public abstract class Notify implements Serializable {
 
 	private static final long serialVersionUID = -7191320079281358428L;
-	
+
 	@JSONField(name = "type")
 	private MessageType messageType;
 
@@ -27,9 +27,5 @@ public abstract class Notify implements Serializable {
 
 	public MessageType getMessageType() {
 		return messageType;
-	}
-
-	public void setMessageType(MessageType messageType) {
-		this.messageType = messageType;
 	}
 }

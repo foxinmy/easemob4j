@@ -6,7 +6,7 @@ import com.foxinmy.easemob4j.type.MessageType;
  * 透传消息：不会在客户端提示（铃声，震动，通知栏等），但可以在客户端监听到的消息推送，具体功能可以根据自身自定义
  * 
  * @className Command
- * @author jy
+ * @author jinyu(foxinmy@gmail.com)
  * @date 2015年3月18日
  * @since JDK 1.6
  * @see
@@ -38,5 +38,4 @@ public class Command extends Notify {
 	public String toString() {
 		return "Command [action=" + action + "]";
 	}
-
 }

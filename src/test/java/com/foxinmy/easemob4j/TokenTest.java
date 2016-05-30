@@ -5,36 +5,31 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.foxinmy.easemob4j.exception.EasemobException;
-import com.foxinmy.easemob4j.model.Consts;
-import com.foxinmy.easemob4j.model.EMAccount;
 import com.foxinmy.easemob4j.token.EasemobTokenCreator;
-import com.foxinmy.easemob4j.token.EasemobTokenHolder;
-import com.foxinmy.easemob4j.util.Easemob4jConfigUtil;
-import com.foxinmy.weixin4j.token.FileTokenStorager;
+import com.foxinmy.easemob4j.token.EasemobTokenManager;
+import com.foxinmy.easemob4j.util.Easemob4jSettings;
 
 /**
- * 
+ *
  * @className TokenTest
- * @author jy
+ * @author jinyu(foxinmy@gmail.com)
  * @date 2015年1月28日
  * @since JDK 1.7
  * @see
  */
 public class TokenTest {
 
-	protected EasemobTokenHolder tokenHolder;
+	protected EasemobTokenManager tokenHolder;
 
 	@Before
 	public void setUp() {
-		EMAccount account = Easemob4jConfigUtil.getAccount();
-		String tokenPath = Easemob4jConfigUtil.getValue("easemob4j.token.path",
-				Consts.DEFAULT_TOKEN_PATH);
-		tokenHolder = new EasemobTokenHolder(new EasemobTokenCreator(account),
-				new FileTokenStorager(tokenPath), account);
+		Easemob4jSettings settings = new Easemob4jSettings();
+		tokenHolder = new EasemobTokenManager(new EasemobTokenCreator(
+				settings.getAccount()), settings.getCacheStorager0());
 	}
 
 	@Test
 	public void test() throws EasemobException {
-		Assert.assertNotNull(tokenHolder.getToken());
+		Assert.assertNotNull(tokenHolder.getCache());
 	}
 }

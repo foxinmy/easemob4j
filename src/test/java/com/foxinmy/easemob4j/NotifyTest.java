@@ -8,13 +8,14 @@ import com.foxinmy.easemob4j.exception.EasemobException;
 import com.foxinmy.easemob4j.message.Notify;
 import com.foxinmy.easemob4j.message.NotifyMessage;
 import com.foxinmy.easemob4j.message.Text;
+import com.foxinmy.easemob4j.model.MultSearcher;
 import com.foxinmy.easemob4j.type.TargetType;
 
 /**
  * 消息相关测试
- * 
+ *
  * @className NotifyTest
- * @author jy
+ * @author jinyu(foxinmy@gmail.com)
  * @date 2015年03月18日
  * @since JDK 1.7
  * @see
@@ -34,5 +35,11 @@ public class NotifyTest extends TokenTest {
 		message.setFrom("2");
 		System.err.println(notifyApi.sendNotify(message));
 		System.err.println(notifyApi.sendNotify(message));
+	}
+
+	@Test
+	public void getMessages() throws EasemobException {
+		MultSearcher searcher = MultSearcher.custom().build();
+		System.err.println(notifyApi.getMessages(searcher));
 	}
 }

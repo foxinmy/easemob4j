@@ -6,7 +6,7 @@ import java.io.Serializable;
  * 环信账号信息
  * 
  * @className EMAccount
- * @author jy
+ * @author jinyu(foxinmy@gmail.com)
  * @date 2015年1月28日
  * @since JDK 1.6
  * @see

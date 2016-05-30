@@ -11,7 +11,7 @@ import com.foxinmy.easemob4j.model.User;
  * 用户相关测试
  * 
  * @className UserTest
- * @author jy
+ * @author jinyu(foxinmy@gmail.com)
  * @date 2015年1月28日
  * @since JDK 1.7
  * @see

@@ -1,17 +1,17 @@
 package com.foxinmy.easemob4j.util;
 
-import java.io.File;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import com.alibaba.fastjson.JSON;
 import com.foxinmy.easemob4j.model.EMAccount;
+import com.foxinmy.weixin4j.util.StringUtil;
 
 /**
  * 环信配置
  * 
  * @className Easemob4jConfigUtil
- * @author jy
+ * @author jinyu(foxinmy@gmail.com)
  * @date 2015年1月28日
  * @since JDK 1.6
  * @see
@@ -19,22 +19,14 @@ import com.foxinmy.easemob4j.model.EMAccount;
 public class Easemob4jConfigUtil {
 	private final static String CLASSPATH_PREFIX = "classpath:";
 	private final static String CLASSPATH_VALUE;
-	private final static ResourceBundle easemobBundle;
+	private static ResourceBundle easemobBundle;
 	static {
-		easemobBundle = ResourceBundle.getBundle("easemob4j");
-		File file = null;
 		CLASSPATH_VALUE = Thread.currentThread().getContextClassLoader()
 				.getResource("").getPath();
-		for (String key : easemobBundle.keySet()) {
-			if (!key.endsWith(".path")) {
-				continue;
-			}
-			file = new File(getValue(key).replaceFirst(CLASSPATH_PREFIX,
-					CLASSPATH_VALUE));
-			if (!file.exists() && !file.mkdirs()) {
-				System.err.append(String.format("%s create fail.%n",
-						file.getAbsolutePath()));
-			}
+		try {
+			easemobBundle = ResourceBundle.getBundle("easemob4j");
+		} catch (MissingResourceException e) {
+			;
 		}
 	}
 	private final static String EASEMOB4J_PREFIX = "easemob4j";
@@ -56,7 +48,7 @@ public class Easemob4jConfigUtil {
 		String wrapKey = wrapKeyName(key);
 		return System.getProperty(wrapKey, easemobBundle.getString(wrapKey));
 	}
-	
+
 	/**
 	 * key不存在时则返回传入的默认值
 	 * 
@@ -68,10 +60,13 @@ public class Easemob4jConfigUtil {
 		String value = defaultValue;
 		try {
 			value = getValue(key);
+			if (StringUtil.isBlank(value)) {
+				value = defaultValue;
+			}
 		} catch (MissingResourceException e) {
-			System.err.println("'" + key
-					+ "' key not found in easemod4j.properties file.");
-			; // error
+			;
+		} catch (NullPointerException e) {
+			;
 		}
 		return value;
 	}
@@ -83,8 +78,7 @@ public class Easemob4jConfigUtil {
 	 * @return
 	 */
 	public static String getClassPathValue(String key) {
-		return new File(getValue(key).replaceFirst(CLASSPATH_PREFIX,
-				CLASSPATH_VALUE)).getPath();
+		return getValue(key).replaceFirst(CLASSPATH_PREFIX, CLASSPATH_VALUE);
 	}
 
 	/**
@@ -93,7 +87,16 @@ public class Easemob4jConfigUtil {
 	 * @return
 	 */
 	public static EMAccount getAccount() {
-		String text = getValue("account");
-		return JSON.parseObject(text, EMAccount.class);
+		EMAccount account = null;
+		try {
+			account = JSON.parseObject(getValue("account"), EMAccount.class);
+		} catch (NullPointerException e) {
+			System.err
+					.println("'easemob4j.account' key not found in easemob4j.properties.");
+		} catch (MissingResourceException e) {
+			System.err
+					.println("'easemob4j.account' key not found in easemob4j.properties.");
+		}
+		return account;
 	}
 }

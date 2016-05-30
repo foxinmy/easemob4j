@@ -14,7 +14,7 @@ import com.foxinmy.easemob4j.type.TargetType;
  * 聊天消息
  * 
  * @className NotifyMessage
- * @author jy
+ * @author jinyu(foxinmy@gmail.com)
  * @date 2015年3月18日
  * @since JDK 1.6
  * @see com.foxinmy.easemob4j.type.TargetType

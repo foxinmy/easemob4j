@@ -7,7 +7,7 @@ import com.foxinmy.easemob4j.type.MessageType;
  * 视频消息:需要先上传视频文件和视频缩略图文件，然后再发送此消息。（url中的uuid和secret可以从上传后的response获取）
  * 
  * @className Video
- * @author jy
+ * @author jinyu(foxinmy@gmail.com)
  * @date 2015年3月18日
  * @since JDK 1.6
  * @see
