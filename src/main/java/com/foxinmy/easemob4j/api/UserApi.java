@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.foxinmy.easemob4j.exception.EasemobException;
 import com.foxinmy.easemob4j.model.User;
-import com.foxinmy.easemob4j.token.EasemobToken;
 import com.foxinmy.easemob4j.token.EasemobTokenManager;
 
 /**
@@ -18,11 +17,9 @@ import com.foxinmy.easemob4j.token.EasemobTokenManager;
  * @see <a href="http://www.easemob.com/docs/rest/userapi/">用户体系</a>
  */
 public class UserApi extends BaseApi {
-	private final EasemobTokenManager tokenManager;
 
 	public UserApi(EasemobTokenManager tokenManager) {
-		super(tokenManager.getAccount());
-		this.tokenManager = tokenManager;
+		super(tokenManager);
 	}
 
 	/**
@@ -37,9 +34,7 @@ public class UserApi extends BaseApi {
 	 */
 	public ApiResult createUser(User... user) throws EasemobException {
 		String create_user_url = getRequestUri0("create_user_url");
-		EasemobToken token = tokenManager.getCache();
-		JSONObject response = post(create_user_url, token.getAccessToken(),
-				JSON.toJSONString(user));
+		JSONObject response = post(create_user_url, JSON.toJSONString(user));
 		return JSON.toJavaObject(response, ApiResult.class);
 	}
 
@@ -59,9 +54,7 @@ public class UserApi extends BaseApi {
 			throws EasemobException {
 		String contact_friend_url = getRequestUri1("contact_friend_url",
 				ownerName, friendName);
-		EasemobToken token = tokenManager.getCache();
-		JSONObject response = post(contact_friend_url, token.getAccessToken(),
-				null);
+		JSONObject response = post(contact_friend_url, null);
 		return JSON.toJavaObject(response, ApiResult.class);
 	}
 }

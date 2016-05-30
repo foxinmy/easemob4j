@@ -1,6 +1,12 @@
 package com.foxinmy.easemob4j.model;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.foxinmy.weixin4j.model.Consts;
+import com.foxinmy.weixin4j.util.StringUtil;
+import com.foxinmy.weixin4j.util.URLEncodingUtil;
 
 /**
  * 多条记录搜索条件
@@ -61,6 +67,19 @@ public class MultSearcher implements Serializable {
 	public String toQL() {
 		return String.format("select * where timestamp%s%s", whereOp.getOp(),
 				timestamp);
+	}
+
+	public Map<String, String> toParameters() {
+		Map<String, String> parameters = new HashMap<String, String>();
+		parameters.put("ql",
+				URLEncodingUtil.encoding(toQL(), Consts.UTF_8, true));
+		if (limit > 0) {
+			parameters.put("limit", Integer.toString(limit));
+		}
+		if (StringUtil.isNotBlank(cursor)) {
+			parameters.put("cursor", cursor);
+		}
+		return parameters;
 	}
 
 	@Override

@@ -22,10 +22,7 @@ import com.foxinmy.easemob4j.message.Video;
 import com.foxinmy.easemob4j.model.MultSearcher;
 import com.foxinmy.easemob4j.token.EasemobTokenManager;
 import com.foxinmy.easemob4j.type.MessageType;
-import com.foxinmy.weixin4j.model.Consts;
-import com.foxinmy.weixin4j.model.Token;
 import com.foxinmy.weixin4j.util.NameValue;
-import com.foxinmy.weixin4j.util.URLEncodingUtil;
 
 /**
  * 消息API
@@ -37,11 +34,8 @@ import com.foxinmy.weixin4j.util.URLEncodingUtil;
  */
 public class NotifyApi extends BaseApi {
 
-	private final EasemobTokenManager tokenManager;
-
 	public NotifyApi(EasemobTokenManager tokenManager) {
-		super(tokenManager.getAccount());
-		this.tokenManager = tokenManager;
+		super(tokenManager);
 	}
 
 	/**
@@ -63,9 +57,7 @@ public class NotifyApi extends BaseApi {
 	 */
 	public JSONObject sendNotify(NotifyMessage message) throws EasemobException {
 		String send_message_url = getRequestUri0("send_message_url");
-		Token token = tokenManager.getCache();
-		JSONObject response = post(send_message_url, token.getAccessToken(),
-				JSON.toJSONString(message));
+		JSONObject response = post(send_message_url, JSON.toJSONString(message));
 		return response.getJSONObject("data");
 	}
 
@@ -85,12 +77,7 @@ public class NotifyApi extends BaseApi {
 	public ArrayResult<ChatMessage> getMessages(MultSearcher searcher)
 			throws EasemobException {
 		String chat_messages_url = getRequestUri0("chat_messages_url");
-		Token token = tokenManager.getCache();
-		JSONObject response = get(
-				chat_messages_url
-						+ "?"
-						+ URLEncodingUtil.encoding(searcher.toQL(),
-								Consts.UTF_8, true), token.getAccessToken());
+		JSONObject response = get(chat_messages_url, searcher.toParameters());
 		ArrayResult<ChatMessage> message = JSON.toJavaObject(response,
 				ArrayResult.class);
 		JSONArray entities = response.getJSONArray("entities");
