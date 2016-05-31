@@ -64,6 +64,13 @@ public class MultSearcher implements Serializable {
 		return new Builder();
 	}
 
+	public static MultSearcher.Builder copy(MultSearcher searcher) {
+		return new Builder().setCursor(searcher.getCursor())
+				.setLimit(searcher.getLimit())
+				.setTimestamp(searcher.getTimestamp())
+				.setWhereOp(searcher.getWhereOp());
+	}
+
 	public String toQL() {
 		return String.format("select * where timestamp%s%s", whereOp.getOp(),
 				timestamp);
