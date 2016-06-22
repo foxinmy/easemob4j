@@ -39,10 +39,7 @@ easemob4j.properties说明
     EasemobProxy easemobProxy = new EasemobProxy();
     easemobProxy.createUser(user);
 
-3.针对`token`存储有两种方案,`File存储`/`Redis存储`,当然也可自己实现`TokenHolder`,默认使用文件(xml)的方式保存token,如果环境中支持`redis`,建议使用`RedisTokenHolder`并在自己项目中依赖`jedis`.
-
-    EasemobProxy easemobProxy = new EasemobProxy(new RedisTokenHolder());
-    // easemobProxy = new EasemobProxy(new RedisTokenHolder(emAccount));
+3.针对`token`存储见：https://github.com/foxinmy/weixin4j/wiki/Cache%E7%BC%93%E5%AD%98%E5%AE%9E%E7%8E%B0
 
 如何获取
 -------
