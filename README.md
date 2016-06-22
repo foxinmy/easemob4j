@@ -39,7 +39,7 @@ easemob4j.properties说明
     EasemobProxy easemobProxy = new EasemobProxy();
     easemobProxy.createUser(user);
 
-3.针对`token`存储见：https://github.com/foxinmy/weixin4j/wiki/Cache%E7%BC%93%E5%AD%98%E5%AE%9E%E7%8E%B0
+3.[token存储](https://github.com/foxinmy/weixin4j/wiki/Cache%E7%BC%93%E5%AD%98%E5%AE%9E%E7%8E%B0)
 
 如何获取
 -------
